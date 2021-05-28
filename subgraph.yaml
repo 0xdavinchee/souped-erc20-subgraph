@@ -1,0 +1,35 @@
+specVersion: 0.0.1
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: Souped
+    network: rinkeby
+    source:
+      address: "0x2D914E949391048742337205758aF6EbA57acf8f"
+      abi: Souped
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.2
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - Paused
+        - Snapshot
+        - Transfer
+        - Unpaused
+      abis:
+        - name: Souped
+          file: ./abis/Souped.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,uint256)
+          handler: handleApproval
+        - event: Paused(address)
+          handler: handlePaused
+        - event: Snapshot(uint256)
+          handler: handleSnapshot
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+        - event: Unpaused(address)
+          handler: handleUnpaused
+      file: ./src/mapping.ts
