@@ -1,4 +1,6 @@
-specVersion: 0.0.1
+specVersion: 0.0.2
+description: A Souped up ERC20 Token with all the OpenZeppelin ERC20 Standards Extensions
+repository: https://github.com/0xdavinchee/souped-erc20-subgraph
 schema:
   file: ./schema.graphql
 dataSources:
@@ -10,7 +12,7 @@ dataSources:
       abi: Souped
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.2
+      apiVersion: 0.0.4
       language: wasm/assemblyscript
       entities:
         - Approval
@@ -24,12 +26,6 @@ dataSources:
       eventHandlers:
         - event: Approval(indexed address,indexed address,uint256)
           handler: handleApproval
-        - event: Paused(address)
-          handler: handlePaused
-        - event: Snapshot(uint256)
-          handler: handleSnapshot
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
-        - event: Unpaused(address)
-          handler: handleUnpaused
       file: ./src/mapping.ts

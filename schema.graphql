@@ -1,6 +1,52 @@
-type ExampleEntity @entity {
+type Token @entity {
   id: ID!
-  count: BigInt!
-  owner: Bytes! # address
-  spender: Bytes! # address
+  address: Bytes! # address
+  decimals: Int!
+  symbol: String
+  name: String
+  eventCount: BigInt!
+  transferEventCount: BigInt!
+  burnEventCount: BigInt!
+  totalSupply: BigDecimal!
+  totalBurned: BigDecimal!
+  cappedSupply: BigDecimal!
+  totalTransferred: BigDecimal!
+  tokenEvents: [TokenEvent!]! @derivedFrom(field: "token")
+}
+
+interface TokenEvent {
+  id: ID!
+  token: Token!
+  sender: Bytes!
+  amount: BigDecimal!
+
+  block: BigInt!
+  timestamp: BigInt!
+  transaction: Bytes!
+}
+
+type ApprovalEvent implements TokenEvent @entity {
+  id: ID!
+  token: Token!
+  sender: Bytes!
+  amount: BigDecimal!
+
+  block: BigInt!
+  timestamp: BigInt!
+  transaction: Bytes!
+
+  spender: Bytes!
+}
+
+type TransferEvent implements TokenEvent @entity {
+  id: ID!
+  token: Token!
+  sender: Bytes!
+  amount: BigDecimal!
+
+  block: BigInt!
+  timestamp: BigInt!
+  transaction: Bytes!
+
+  recipient: Bytes!
 }
