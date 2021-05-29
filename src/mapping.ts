@@ -1,9 +1,7 @@
 import { BigDecimal, BigInt, Bytes, ethereum } from "@graphprotocol/graph-ts";
 import { Approval, Transfer } from "../generated/Souped/Souped";
 import { ApprovalEvent, Token, TransferEvent } from "../generated/schema";
-import { toDecimal } from "./helper";
-
-const ONE = new BigInt(1);
+import { ONE, toDecimal } from "./helper";
 const GENESIS_ADDRESS = "0x0000000000000000000000000000000000000000";
 
 export function handleApproval(event: Approval): void {
@@ -19,7 +17,7 @@ export function handleApproval(event: Approval): void {
   approvalEvent.token = event.address.toHex();
   approvalEvent.sender = event.transaction.from;
   approvalEvent.amount = amount;
-  approvalEvent.spender = event.transaction.to;
+  approvalEvent.spender = event.transaction.to!;
 
   approvalEvent.block = event.block.number;
   approvalEvent.timestamp = event.block.timestamp;
@@ -41,7 +39,7 @@ export function handleTransfer(event: Transfer): void {
 
   let isBurn = event.params.to.toHex() == GENESIS_ADDRESS;
 
-  let entityEventId;
+  let entityEventId: string;
 
   if (isBurn) {
     let entityEvent = handleBurnEvent(token, amount, event.params.to, event);

@@ -6,3 +6,5 @@ export function toDecimal(value: BigInt, decimals: u32): BigDecimal {
 
   return value.divDecimal(precision);
 }
+
+export let ONE = BigInt.fromI32(1);
