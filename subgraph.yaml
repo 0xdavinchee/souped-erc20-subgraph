@@ -16,10 +16,7 @@ dataSources:
       language: wasm/assemblyscript
       entities:
         - Approval
-        - Paused
-        - Snapshot
         - Transfer
-        - Unpaused
       abis:
         - name: Souped
           file: ./abis/Souped.json
